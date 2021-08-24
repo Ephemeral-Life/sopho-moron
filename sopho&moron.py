@@ -45,6 +45,7 @@ def getIntoClass():
         while True:
             time.sleep(20)
             answer(driver)
+            # isClassOver(driver, now_time)
     except TimeoutException:
         print(now_time, "你现在没课")
         driver.close()
@@ -70,10 +71,17 @@ def answer(driver):
         submit = driver.find_element_by_xpath('//*[@class="container"]/section[3]/p')
         time.sleep(1)
         submit.click()
-        print("bot:我完成了一道题")
+        print(time.strftime("%H:%M:%S", time.localtime()), "bot:我完成了一道题")
         driver.refresh()
     except NoSuchElementException:
         driver.refresh()
+
+
+def isClassOver(driver, now_time):
+    tag = driver.find_element_by_id('tab-student')
+    if len(tag) != 0:
+        driver.close()
+        print(now_time, "bot:我回来啦")
 
 
 if __name__ == "__main__":
