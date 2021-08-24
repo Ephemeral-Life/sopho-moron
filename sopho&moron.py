@@ -41,7 +41,7 @@ def getIntoClass():
         driver.find_element_by_xpath('//*[@id="app"]/div[2]/div/div[1]/div[2]/div/div[2]').click()
         print(now_time, "bot:我去上课啦")
         print("我将会每10s检测一次有没有随堂测试")
-        driver.switch_to.window(driver.window_handles[len(driver.window_handles)-1])
+        driver.switch_to.window(driver.window_handles[len(driver.window_handles) - 1])
         while True:
             time.sleep(10)
             answer(driver)
@@ -52,7 +52,7 @@ def getIntoClass():
 
 def autoRun():
     scheduler = BlockingScheduler()
-    scheduler.add_job(getIntoClass, 'cron', hour='6-21', minute='58')
+    scheduler.add_job(getIntoClass, 'cron', hour='6-21', minute='58', max_instances=20)
     scheduler.start()
 
 
@@ -65,24 +65,27 @@ def savePage(driver):
 
 def answer(driver):
     try:
-        chooseA = driver.find_element_by_xpath('//*[@class="container"]/section[3]/ul/li[1]/p')
+        chooseA = driver.find_element_by_xpath('//*[@class="container"]/section[3]/ul/li[2]/p')
         chooseA.click()
         submit = driver.find_element_by_xpath('//*[@class="container"]/section[3]/p')
+        time.sleep(2)
         submit.click()
-        print("bot:我做了1道题")
-        driver.refresh()
+        print("bot:我完成了一道题")
     except NoSuchElementException:
         pass
 
 
 if __name__ == "__main__":
-    if os.path.exists("cookies.txt"):
-        getIntoClass()
-        autoRun()
-    else:
-        print("Hello，初次相遇需要先做一些设置，手动扫码登录一次，让我获取你的cookies。")
-        getCookies()
-        print("完成了, 现在我将在每个整点自动登录一次，如果发现有课就会进入教室上课。")
-        print("挂在后台就好, 去做点真正有用的事情吧。\n")
-        getIntoClass()
-        autoRun()
+    try:
+        if os.path.exists("cookies.txt"):
+            getIntoClass()
+            autoRun()
+        else:
+            print("Hello，初次相遇需要先做一些设置，手动扫码登录一次，让我获取你的cookies。")
+            getCookies()
+            print("完成了, 现在我将在每个整点自动登录一次，如果发现有课就会进入教室上课。")
+            print("挂在后台就好, 去做点真正有用的事情吧。\n")
+            getIntoClass()
+            autoRun()
+    except Exception as ex:  # don't you ever stop!
+        print(ex)
