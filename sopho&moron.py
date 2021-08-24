@@ -65,8 +65,8 @@ def savePage(driver):
 
 def answer(driver):
     try:
-        chooseA = driver.find_element_by_xpath('//*[@class="container"]/section[3]/ul/li[2]/p')
-        chooseA.click()
+        chooseB = driver.find_element_by_xpath('//*[@class="container"]/section[3]/ul/li[2]/p')
+        chooseB.click()
         submit = driver.find_element_by_xpath('//*[@class="container"]/section[3]/p')
         time.sleep(2)
         submit.click()
