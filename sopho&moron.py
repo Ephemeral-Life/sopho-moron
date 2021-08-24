@@ -40,10 +40,10 @@ def getIntoClass():
         driver.find_element_by_class_name("tipbar").click()
         driver.find_element_by_xpath('//*[@id="app"]/div[2]/div/div[1]/div[2]/div/div[2]').click()
         print(now_time, "bot:我去上课啦")
-        print("我将会每10s检测一次有没有随堂测试")
+        print("我将会每20s检测一次有没有随堂测试")
         driver.switch_to.window(driver.window_handles[len(driver.window_handles) - 1])
         while True:
-            time.sleep(10)
+            time.sleep(20)
             answer(driver)
     except TimeoutException:
         print(now_time, "你现在没课")
@@ -68,11 +68,12 @@ def answer(driver):
         chooseB = driver.find_element_by_xpath('//*[@class="container"]/section[3]/ul/li[2]/p')
         chooseB.click()
         submit = driver.find_element_by_xpath('//*[@class="container"]/section[3]/p')
-        time.sleep(2)
+        time.sleep(1)
         submit.click()
         print("bot:我完成了一道题")
+        driver.refresh()
     except NoSuchElementException:
-        pass
+        driver.refresh()
 
 
 if __name__ == "__main__":
